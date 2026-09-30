@@ -252,10 +252,21 @@ const EDIApp = (() => {
       resizeTimer = setTimeout(updateCarousel, 150);
     });
 
-    // Pausar outros vídeos quando um der play
+    // Garantir silêncio total (áudio desativado) e pausar outros vídeos quando um der play
     cards.forEach(card => {
       const vid = card.querySelector('video');
       if (vid) {
+        vid.muted = true;
+        vid.defaultMuted = true;
+        vid.volume = 0;
+
+        vid.addEventListener('volumechange', () => {
+          if (!vid.muted || vid.volume > 0) {
+            vid.muted = true;
+            vid.volume = 0;
+          }
+        });
+
         vid.addEventListener('play', () => {
           track.querySelectorAll('video').forEach(otherVid => {
             if (otherVid !== vid && !otherVid.paused) {
