@@ -17,16 +17,6 @@ const EDIApp = (() => {
     rateLimitCooldownMs: 2500 // Proteção contra múltiplos cliques
   };
 
-  // Multiplicadores por Porte de Veículo
-  const VEHICLE_MULTIPLIERS = {
-    'Hatch / Compacto': 1.0,
-    'Sedan Médio': 1.15,
-    'SUV / Crossover': 1.30,
-    'Picape / SUV Grande': 1.45
-  };
-
-  let lastSubmitTime = 0;
-
   /* ==========================================================================
      1. Módulo de Segurança Web Básica (Anti-XSS e Sanitização)
      ========================================================================== */
@@ -89,119 +79,194 @@ const EDIApp = (() => {
   };
 
   /* ==========================================================================
-     3. Simulador de Orçamento & Integração WhatsApp Oficial
+     3. Carrossel Interativo de Vídeos dos Trabalhos Reais
      ========================================================================== */
-  const calculateEstimate = () => {
-    const vehicleRadio = document.querySelector('input[name="vehicle_type"]:checked');
-    const vehicleType = vehicleRadio ? vehicleRadio.value : 'Hatch / Compacto';
-    const multiplier = VEHICLE_MULTIPLIERS[vehicleType] || 1.0;
+  let currentVideoIndex = 0;
 
-    const selectedCheckboxes = document.querySelectorAll('input[name="services"]:checked');
-    let baseTotal = 0;
-    const selectedServices = [];
+  const initVideosCarousel = () => {
+    const wrapper = document.getElementById('videos-carousel-wrapper');
+    const track = document.getElementById('videos-track');
+    const prevBtn = document.getElementById('video-prev-btn');
+    const nextBtn = document.getElementById('video-next-btn');
+    const currentIndexEl = document.getElementById('video-current-index');
+    const totalCountEl = document.getElementById('video-total-count');
+    const dotsContainer = document.getElementById('carousel-dots');
 
-    selectedCheckboxes.forEach(cb => {
-      const price = parseFloat(cb.dataset.base || '0');
-      baseTotal += price;
-      selectedServices.push(cb.value);
-    });
+    if (!wrapper || !track) return;
 
-    const calculatedTotal = Math.round(baseTotal * multiplier);
+    const cards = track.querySelectorAll('.video-card');
+    const totalCards = cards.length;
+    if (totalCards === 0) return;
 
-    const summaryVehicle = document.getElementById('summary-vehicle');
-    const summaryServicesCount = document.getElementById('summary-services-count');
-    const summaryTotal = document.getElementById('summary-total');
+    if (totalCountEl) totalCountEl.textContent = totalCards;
 
-    if (summaryVehicle) summaryVehicle.textContent = vehicleType;
-    if (summaryServicesCount) {
-      summaryServicesCount.textContent = `${selectedServices.length} serviço${selectedServices.length !== 1 ? 's' : ''} selecionado${selectedServices.length !== 1 ? 's' : ''}`;
-    }
-    if (summaryTotal) {
-      if (calculatedTotal > 0) {
-        summaryTotal.textContent = `A partir de R$ ${calculatedTotal.toLocaleString('pt-BR')}`;
-      } else {
-        summaryTotal.textContent = 'Sob Consulta';
+    // Criar dots indicadores
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('button');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Ir para o vídeo ${i + 1}`);
+        dot.addEventListener('click', () => {
+          goToSlide(i);
+        });
+        dotsContainer.appendChild(dot);
       }
     }
 
-    return {
-      vehicleType,
-      selectedServices,
-      calculatedTotal
+    const getVisibleCount = () => {
+      const w = window.innerWidth;
+      if (w <= 768) return 1;
+      if (w <= 992) return 2;
+      return 3;
     };
-  };
 
-  const handleQuoteSubmit = (event) => {
-    if (event) event.preventDefault();
+    const getMaxIndex = () => {
+      const visible = getVisibleCount();
+      return Math.max(0, totalCards - visible);
+    };
 
-    const now = Date.now();
-    if (now - lastSubmitTime < CONFIG.rateLimitCooldownMs) {
-      showToast('Por favor, aguarde alguns segundos antes de reenviar.');
-      return;
+    const pauseAllVideos = () => {
+      track.querySelectorAll('video').forEach(vid => {
+        if (!vid.paused) {
+          vid.pause();
+        }
+      });
+    };
+
+    const updateCarousel = () => {
+      const maxIndex = getMaxIndex();
+      if (currentVideoIndex > maxIndex) {
+        currentVideoIndex = maxIndex;
+      }
+      if (currentVideoIndex < 0) {
+        currentVideoIndex = 0;
+      }
+
+      const card = cards[0];
+      if (!card) return;
+
+      const cardWidth = card.getBoundingClientRect().width;
+      const gap = 24; // 1.5rem
+      const offset = currentVideoIndex * (cardWidth + gap);
+
+      track.style.transform = `translateX(-${offset}px)`;
+
+      if (currentIndexEl) {
+        currentIndexEl.textContent = currentVideoIndex + 1;
+      }
+
+      if (prevBtn) {
+        prevBtn.disabled = currentVideoIndex === 0;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = currentVideoIndex >= maxIndex;
+      }
+
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentVideoIndex);
+        });
+      }
+    };
+
+    const goToSlide = (index) => {
+      pauseAllVideos();
+      const maxIndex = getMaxIndex();
+      currentVideoIndex = Math.max(0, Math.min(index, maxIndex));
+      updateCarousel();
+    };
+
+    const nextSlide = () => {
+      pauseAllVideos();
+      const maxIndex = getMaxIndex();
+      if (currentVideoIndex < maxIndex) {
+        currentVideoIndex++;
+      } else {
+        currentVideoIndex = 0;
+      }
+      updateCarousel();
+    };
+
+    const prevSlide = () => {
+      pauseAllVideos();
+      const maxIndex = getMaxIndex();
+      if (currentVideoIndex > 0) {
+        currentVideoIndex--;
+      } else {
+        currentVideoIndex = maxIndex;
+      }
+      updateCarousel();
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', prevSlide);
     }
 
-    const trap = document.getElementById('website_trap_field');
-    if (trap && trap.value.trim() !== '') {
-      console.warn('Bot detectado.');
-      return;
+    if (nextBtn) {
+      nextBtn.addEventListener('click', nextSlide);
     }
 
-    const nameInput = document.getElementById('client_name');
-    const carInput = document.getElementById('car_model');
-    const nameError = document.getElementById('name-error');
-    const carError = document.getElementById('car-error');
+    // Suporte a Touch & Swipe em Dispositivos Móveis
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    let isSwiping = false;
 
-    if (nameError) nameError.textContent = '';
-    if (carError) carError.textContent = '';
+    wrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchEndX = touchStartX;
+      touchEndY = touchStartY;
+      isSwiping = true;
+    }, { passive: true });
 
-    const cleanName = cleanPlainText(nameInput ? nameInput.value : '');
-    const cleanCar = cleanPlainText(carInput ? carInput.value : '');
+    wrapper.addEventListener('touchmove', (e) => {
+      if (!isSwiping) return;
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }, { passive: true });
 
-    let hasError = false;
+    wrapper.addEventListener('touchend', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const deltaX = touchStartX - touchEndX;
+      const deltaY = touchStartY - touchEndY;
 
-    if (!cleanName || cleanName.length < 2) {
-      if (nameError) nameError.textContent = 'Por favor, informe seu nome (mínimo 2 caracteres).';
-      if (nameInput) nameInput.focus();
-      hasError = true;
-    }
-
-    if (!cleanCar || cleanCar.length < 2) {
-      if (carError) carError.textContent = 'Por favor, informe o modelo e ano do seu carro.';
-      if (!hasError && carInput) carInput.focus();
-      hasError = true;
-    }
-
-    if (hasError) return;
-
-    const estimate = calculateEstimate();
-    if (estimate.selectedServices.length === 0) {
-      showToast('Selecione ao menos 1 serviço para simulação.');
-      return;
-    }
-
-    lastSubmitTime = now;
-
-    const saudacao = getSaudacaoHorario();
-    let msg = `${saudacao} Édipo! Meu nome é *${cleanName}*.\n`;
-    msg += `Gostaria de agendar um atendimento para meu veículo:\n\n`;
-    msg += `🚗 *Carro:* ${cleanCar}\n`;
-    msg += `🏷️ *Categoria:* ${estimate.vehicleType}\n\n`;
-    msg += `✨ *Serviços Selecionados:*\n`;
-
-    estimate.selectedServices.forEach((serv) => {
-      msg += ` • ${serv}\n`;
+      // Dispara se o movimento for horizontal e maior que 40px
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
     });
 
-    if (estimate.calculatedTotal > 0) {
-      msg += `\n💰 *Estimativa Base do Site:* A partir de R$ ${estimate.calculatedTotal.toLocaleString('pt-BR')}\n`;
-    }
-    msg += `\nVi o site da *Édipo Pimentel Estética Automotiva* e gostaria de agendar uma data. Você teria disponibilidade?`;
+    // Redimensionamento responsivo
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateCarousel, 150);
+    });
 
-    const encodedMsg = encodeURIComponent(msg);
-    const whatsappLink = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMsg}`;
-    window.open(whatsappLink, '_blank', 'noopener,noreferrer');
+    // Pausar outros vídeos quando um der play
+    cards.forEach(card => {
+      const vid = card.querySelector('video');
+      if (vid) {
+        vid.addEventListener('play', () => {
+          track.querySelectorAll('video').forEach(otherVid => {
+            if (otherVid !== vid && !otherVid.paused) {
+              otherVid.pause();
+            }
+          });
+        });
+      }
+    });
 
-    showToast('Abrindo WhatsApp de Édipo Pimentel...');
+    updateCarousel();
   };
 
   const openDirectWhatsApp = (customText) => {
@@ -438,7 +503,7 @@ const EDIApp = (() => {
     initComparisonSlider();
     initScrollAnimations();
     initMobileNavigation();
-    calculateEstimate();
+    initVideosCarousel();
 
     setInterval(initBusinessStatus, 60000);
   };
@@ -450,8 +515,7 @@ const EDIApp = (() => {
   }
 
   return {
-    calculateEstimate,
-    handleQuoteSubmit,
+    initVideosCarousel,
     openDirectWhatsApp,
     copyAddress,
     openModal,

@@ -13,6 +13,7 @@
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
     font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
     img-src 'self' data: https://*.google.com https://*.googleapis.com https://*.gstatic.com https://images.unsplash.com;
+    media-src 'self' data:;
     frame-src 'self' https://www.google.com https://maps.google.com;
     connect-src 'self';
   ">
@@ -65,17 +66,17 @@
           <a href="#hero" class="nav-link active">Início</a>
           <a href="#brand-card" class="nav-link">Sobre</a>
           <a href="#services" class="nav-link">Serviços</a>
+          <a href="#videos" class="nav-link">Vídeos dos Trabalhos</a>
           <a href="#before-after" class="nav-link">Antes & Depois</a>
           <a href="#differentials" class="nav-link">Diferenciais</a>
-          <a href="#calculator" class="nav-link">Orçamento</a>
           <a href="#location" class="nav-link">Localização</a>
         </nav>
 
         <!-- Botão CTA no Header -->
         <div class="nav-actions">
-          <a href="#calculator" class="btn btn-header-cta" id="btn-nav-whatsapp">
+          <a href="https://wa.me/5549988449865" target="_blank" rel="noopener noreferrer" class="btn btn-header-cta" id="btn-nav-whatsapp">
             <i class="fa-brands fa-whatsapp"></i>
-            <span>Agendar Horário</span>
+            <span>Falar no WhatsApp</span>
           </a>
 
           <!-- Botão Menu Mobile -->
@@ -107,13 +108,13 @@
           </p>
 
           <div class="hero-cta-group reveal-item">
-            <a href="#calculator" class="btn btn-primary">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>Simular Orçamento Online</span>
+            <a href="#videos" class="btn btn-primary">
+              <i class="fa-solid fa-play"></i>
+              <span>Ver Vídeos dos Trabalhos</span>
             </a>
-            <a href="#location" class="btn btn-secondary">
-              <i class="fa-solid fa-location-dot"></i>
-              <span>Como Chegar ao Studio</span>
+            <a href="https://wa.me/5549988449865" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Falar no WhatsApp</span>
             </a>
           </div>
 
@@ -209,9 +210,9 @@
                 <li><i class="fa-solid fa-check"></i> Ambiente climatizado e iluminação técnica profissional</li>
               </ul>
               <div class="brand-actions-row">
-                <a href="#calculator" class="btn btn-dark-titanium">
-                  <span>Solicitar Orçamento</span>
-                  <i class="fa-solid fa-arrow-right"></i>
+                <a href="#videos" class="btn btn-dark-titanium">
+                  <span>Ver Vídeos dos Trabalhos</span>
+                  <i class="fa-solid fa-play"></i>
                 </a>
                 <a href="https://wa.me/5549988449865" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
                   <i class="fa-brands fa-whatsapp"></i>
@@ -463,183 +464,190 @@
         </div>
       </section>
 
-      <!-- SEÇÃO 5: SIMULADOR DE ORÇAMENTO & WHATSAPP DIRETO -->
-      <section class="calculator-section" id="calculator">
+      <!-- SEÇÃO 5: VÍDEOS DOS TRABALHOS REAIS (COM CONTROLE INTERATIVO PARA O LADO) -->
+      <section class="videos-section" id="videos">
         <div class="container">
           <div class="section-heading text-center reveal-item">
-            <span class="sub-label">ORÇAMENTO RÁPIDO & PRÁTICO</span>
-            <h2>SIMULE SEU ORÇAMENTO E ENVIE NO WHATSAPP</h2>
-            <p>Selecione a categoria do seu carro e os serviços de interesse para enviar os dados pré-preenchidos diretamente para Édipo Pimentel.</p>
+            <span class="sub-label">REGISTROS REAIS DO ESTÚDIO</span>
+            <h2>O TRABALHO DE ÉDIPO PIMENTEL EM AÇÃO</h2>
+            <p>Assista aos vídeos gravados diretamente no estúdio com os resultados reais de cada veículo. Aperte os botões laterais para navegar pelos vídeos.</p>
           </div>
 
-          <div class="calculator-card reveal-item">
-            <form id="quote-form" onsubmit="EDIApp.handleQuoteSubmit(event)" novalidate>
-              <!-- Campo Honeypot Anti-Spam (Segurança Básica) -->
-              <div class="security-trap" aria-hidden="true" style="display: none !important;">
-                <input type="text" name="website_trap_field" id="website_trap_field" tabindex="-1" autocomplete="off">
-              </div>
+          <!-- Controles do Carrossel de Vídeos (Setas e Contador) -->
+          <div class="carousel-controls-wrapper reveal-item">
+            <div class="carousel-counter">
+              <span id="video-current-index">1</span> de <span id="video-total-count">9</span> trabalhos em vídeo
+            </div>
+            <div class="carousel-buttons">
+              <button class="btn-carousel-nav" id="video-prev-btn" aria-label="Vídeo Anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="btn-carousel-nav" id="video-next-btn" aria-label="Próximo Vídeo">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
 
-              <!-- Passo 1: Categoria do Carro -->
-              <div class="form-step">
-                <label class="step-title">
-                  <span class="step-num">1</span>
-                  <span>Categoria do seu veículo:</span>
-                </label>
-                <div class="vehicle-options-grid">
-                  <label class="vehicle-option active">
-                    <input type="radio" name="vehicle_type" value="Hatch / Compacto" checked onchange="EDIApp.calculateEstimate()">
-                    <div class="option-box">
-                      <i class="fa-solid fa-car-side"></i>
-                      <strong>Hatch / Compacto</strong>
-                      <span>Ex: Polo, Gol, Onix, HB20</span>
-                    </div>
-                  </label>
-                  <label class="vehicle-option">
-                    <input type="radio" name="vehicle_type" value="Sedan Médio" onchange="EDIApp.calculateEstimate()">
-                    <div class="option-box">
-                      <i class="fa-solid fa-car"></i>
-                      <strong>Sedan Médio</strong>
-                      <span>Ex: Corolla, Civic, Jetta, Cruize</span>
-                    </div>
-                  </label>
-                  <label class="vehicle-option">
-                    <input type="radio" name="vehicle_type" value="SUV / Crossover" onchange="EDIApp.calculateEstimate()">
-                    <div class="option-box">
-                      <i class="fa-solid fa-truck-pickup"></i>
-                      <strong>SUV / Crossover</strong>
-                      <span>Ex: Compass, T-Cross, Tracker</span>
-                    </div>
-                  </label>
-                  <label class="vehicle-option">
-                    <input type="radio" name="vehicle_type" value="Picape / SUV Grande" onchange="EDIApp.calculateEstimate()">
-                    <div class="option-box">
-                      <i class="fa-solid fa-truck-monster"></i>
-                      <strong>Picape / Grande</strong>
-                      <span>Ex: Hilux, Ranger, Amarok, SW4</span>
-                    </div>
-                  </label>
+          <!-- Carrossel de Vídeos -->
+          <div class="videos-carousel-container reveal-item" id="videos-carousel-wrapper">
+            <div class="videos-track" id="videos-track">
+              
+              <!-- Vídeo 1 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_1.mp4"></video>
                 </div>
-              </div>
-
-              <!-- Passo 2: Seleção dos Serviços Desejados -->
-              <div class="form-step">
-                <label class="step-title">
-                  <span class="step-num">2</span>
-                  <span>Serviços desejados:</span>
-                </label>
-                <div class="services-checkbox-grid">
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Vitrificação Cerâmica 9H (Pintura + Vidros)" data-base="650" checked onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Vitrificação Cerâmica 9H</strong>
-                      <small>Proteção contra micro-riscos e brilho espelhado</small>
-                    </div>
-                  </label>
-
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Polimento Técnico & Correção de Verniz" data-base="380" checked onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Polimento Técnico & Correção</strong>
-                      <small>Remoção de riscos e restauração do brilho</small>
-                    </div>
-                  </label>
-
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Polimento e Restauração de Faróis" data-base="120" onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Polimento de Faróis</strong>
-                      <small>Transparência ótica total e proteção UV</small>
-                    </div>
-                  </label>
-
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Higienização Interna Detalhada com Vapor" data-base="250" onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Higienização Interna Detalhada</strong>
-                      <small>Bancos, forros, duto de ar e hidratação de couro</small>
-                    </div>
-                  </label>
-
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Lavagem Detalhada Premium (Snow Foam)" data-base="90" onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Lavagem Técnica Premium</strong>
-                      <small>Shampoo pH neutro, pincelamento e descontaminação</small>
-                    </div>
-                  </label>
-
-                  <label class="checkbox-option">
-                    <input type="checkbox" name="services" value="Cristalização de Vidros e Para-brisa" data-base="110" onchange="EDIApp.calculateEstimate()">
-                    <span class="check-box-custom"></span>
-                    <div class="check-info">
-                      <strong>Cristalização de Vidros</strong>
-                      <small>Repelência extrema à chuva para dirigir seguro</small>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Passo 3: Dados de Identificação -->
-              <div class="form-step">
-                <label class="step-title">
-                  <span class="step-num">3</span>
-                  <span>Seus dados para retorno:</span>
-                </label>
-                <div class="inputs-row">
-                  <div class="input-field">
-                    <label for="client_name">Seu Nome:</label>
-                    <div class="input-with-icon">
-                      <i class="fa-solid fa-user"></i>
-                      <input type="text" id="client_name" placeholder="Ex: Rodrigo Silva" maxlength="50" required>
-                    </div>
-                    <span class="error-msg" id="name-error"></span>
-                  </div>
-
-                  <div class="input-field">
-                    <label for="car_model">Modelo e Ano do Carro:</label>
-                    <div class="input-with-icon">
-                      <i class="fa-solid fa-car-rear"></i>
-                      <input type="text" id="car_model" placeholder="Ex: Golf GTI 2021 Preto" maxlength="50" required>
-                    </div>
-                    <span class="error-msg" id="car-error"></span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Resumo e Envio WhatsApp -->
-              <div class="calc-summary-box">
-                <div class="summary-details">
-                  <div class="summary-line">
-                    <span>Categoria Selecionada:</span>
-                    <strong id="summary-vehicle">Hatch / Compacto</strong>
-                  </div>
-                  <div class="summary-line">
-                    <span>Serviços Marcados:</span>
-                    <strong id="summary-services-count">2 serviços selecionados</strong>
-                  </div>
-                  <div class="summary-line highlight-price">
-                    <span>Estimativa Prévia:</span>
-                    <strong class="price-val" id="summary-total">A partir de R$ 1.030</strong>
-                  </div>
-                </div>
-
-                <div class="summary-cta">
-                  <button type="submit" class="btn btn-whatsapp-large" id="btn-submit-quote">
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-shield-halved"></i> Vitrificação 9H</span>
+                  <h4>Aplicação de Revestimento Cerâmico</h4>
+                  <p>Camada de proteção e brilho espelhado com repelência extrema à água e contaminantes.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Vi%20o%20v%C3%ADdeo%20de%20vitrifica%C3%A7%C3%A3o%20no%20site%20e%20gostaria%20de%20agendar%20para%20meu%20carro." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
                     <i class="fa-brands fa-whatsapp"></i>
-                    <span>Enviar Orçamento Pronto no WhatsApp</span>
-                  </button>
-                  <div class="security-seal">
-                    <i class="fa-solid fa-lock"></i>
-                    <span>Conversa direta com Édipo Pimentel: (49) 9.8844-9865</span>
-                  </div>
+                    <span>Quero Este Resultado</span>
+                  </a>
                 </div>
               </div>
-            </form>
+
+              <!-- Vídeo 2 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_2.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-crosshairs"></i> Correção Técnica</span>
+                  <h4>Polimento & Remoção de Riscos</h4>
+                  <p>Eliminação de marcas circulares e hologramas, revelando a cor pura do verniz.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Vi%20o%20v%C3%ADdeo%20de%20polimento%20t%C3%A9cnico%20no%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 3 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_3.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-gem"></i> Espelhamento</span>
+                  <h4>Acabamento Padrão Showroom</h4>
+                  <p>Inspeção sob iluminação técnica de estúdio comprovando acabamento sem marcas.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Vi%20o%20v%C3%ADdeo%20de%20espelhamento%20no%20site%20e%20quero%20agendar." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 4 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_4.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-car-side"></i> Detalhe Externo</span>
+                  <h4>Cuidado Cirúrgico com a Lataria</h4>
+                  <p>Processo minucioso de polimento em frestas, vincos, emblemas e cantos da carroceria.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Gostaria%20de%20agendar%20um%20detalhamento%20completo%20no%20meu%20carro." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 5 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_5.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-certificate"></i> Transformação Total</span>
+                  <h4>Entrega com Brilho Profundo</h4>
+                  <p>Veículo finalizado em estado impecável, pronto com proteção e valorização.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Gostei%20muito%20da%20transforma%C3%A7%C3%A3o%20do%20carro%20no%20v%C3%ADdeo.%20Quero%20fazer%20no%20meu." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 6 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_6.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-droplet"></i> Hidrorrepelência</span>
+                  <h4>Proteção Hidrofóbica em Ação</h4>
+                  <p>Gotas escorrendo instantaneamente em teste prático após a cura da vitrificação.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Vi%20o%20teste%20de%20hidrorrepel%C3%AAncia%20no%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 7 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_7.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-lightbulb"></i> Faróis & Lentes</span>
+                  <h4>Restauração de Faróis</h4>
+                  <p>Lentes translúcidas restauradas com polímero protetor contra novo amarelamento.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Preciso%20fazer%20o%20polimento%20dos%20far%C3%B3is%20do%20meu%20carro." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 8 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_8.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-couch"></i> Interior Premium</span>
+                  <h4>Higienização & Hidratação de Couro</h4>
+                  <p>Limpeza técnica a vapor e condicionamento nobre preservando a textura original.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Gostaria%20de%20agendar%20uma%20higieniza%C3%A7%C3%A3o%20interna%20completa." target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Vídeo 9 -->
+              <div class="video-card">
+                <div class="video-media-box">
+                  <video controls playsinline preload="metadata" src="assets/videos/trabalho_9.mp4"></video>
+                </div>
+                <div class="video-card-info">
+                  <span class="video-badge"><i class="fa-solid fa-award"></i> Padrão Édipo Pimentel</span>
+                  <h4>Brilho e Reflexo Puro</h4>
+                  <p>A satisfação de entregar uma verdadeira obra de arte automotiva para cada cliente.</p>
+                  <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Vi%20todos%20os%20seus%20v%C3%ADdeos%20e%20quero%20agendar%20meu%20carro!" target="_blank" rel="noopener noreferrer" class="btn-video-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Quero Este Resultado</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Indicadores de Pontos (Dots) -->
+          <div class="carousel-dots" id="carousel-dots"></div>
+
+          <!-- Botão Central de Ação -->
+          <div class="videos-cta-bottom text-center">
+            <a href="https://wa.me/5549988449865?text=Ol%C3%A1%20%C3%89dipo!%20Gostei%20muito%20dos%20v%C3%ADdeos%20do%20seu%20est%C3%BAdio%20e%20gostaria%20de%20conversar%20sobre%20meu%20carro." target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Conversar com Édipo Pimentel pelo WhatsApp</span>
+            </a>
           </div>
         </div>
       </section>
@@ -898,7 +906,7 @@
             <li><a href="#services">Serviços</a></li>
             <li><a href="#before-after">Antes & Depois</a></li>
             <li><a href="#differentials">Diferenciais</a></li>
-            <li><a href="#calculator">Simulador de Orçamento</a></li>
+            <li><a href="#videos">Vídeos dos Trabalhos</a></li>
             <li><a href="#location">Onde Estamos</a></li>
           </ul>
         </div>
