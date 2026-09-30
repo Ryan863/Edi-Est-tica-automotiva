@@ -1,53 +1,63 @@
 /* ==========================================================================
-   EDI ESTÉTICA AUTOMOTIVA - DESIGN SYSTEM & STYLESHEET
-   Inspirado no visual luxury dark studio da Imagem 1 (MAX COLOR)
+   ÉDIPO PIMENTEL - ESTÉTICA AUTOMOTIVA | DETALHAMENTO PREMIUM
+   Design System: Cinza Studio & Preto Luxo (Inspirado no Cartão Oficial)
+   Sem neons artificiais de IA • 100% Responsivo • Fix de Scroll Mobile
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Variáveis CSS Globais (Design Tokens)
+   1. Variáveis CSS Globais (Design Tokens Cinza & Preto)
    -------------------------------------------------------------------------- */
 :root {
-  /* Cores Base */
-  --bg-dark: #050811;
-  --bg-dark-secondary: #090e1c;
-  --bg-card: rgba(14, 21, 38, 0.72);
-  --bg-card-hover: rgba(18, 28, 52, 0.85);
-  --bg-card-solid: #0c1427;
+  /* Tons de Cinza do Cartão & Studio */
+  --card-gray: #7d8084;
+  --card-gray-light: #9ba0a6;
+  --card-gray-border: #44474d;
+  --titanium-slate: #5b5e63;
   
-  /* Cores de Destaque */
-  --primary-blue: #2563eb;
-  --primary-blue-hover: #1d4ed8;
-  --cyan-accent: #38bdf8;
-  --cyan-glow: rgba(56, 189, 248, 0.25);
-  --blue-glow: rgba(37, 99, 235, 0.35);
+  /* Fundos Escuros Foscos (Matte Dark) */
+  --bg-dark: #121315;
+  --bg-dark-secondary: #181a1d;
+  --bg-surface: #202227;
+  --bg-surface-hover: #272a30;
+  --bg-card: rgba(32, 34, 39, 0.88);
   
-  /* WhatsApp & Sucesso */
-  --whatsapp-green: #22c55e;
-  --whatsapp-hover: #16a34a;
-  --whatsapp-glow: rgba(34, 197, 94, 0.35);
+  /* Detalhes em Preto Profundo */
+  --pure-black: #000000;
+  --black-deep: #0a0b0d;
+  --black-card: #151619;
   
-  /* Tipografia & Cores de Texto */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --border-light: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(59, 130, 246, 0.35);
+  /* Tipografia & Textos */
+  --text-white: #ffffff;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
   
-  /* Fontes */
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  /* Bordas Naturais de Luxo (Sem Neons) */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-focus: #7d8084;
   
-  /* Transições & Raios */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* WhatsApp Profissional (Verde Natural) */
+  --whatsapp-green: #15803d;
+  --whatsapp-hover: #166534;
+  --whatsapp-light: #22c55e;
+  
+  /* Fontes da Identidade Visual */
+  --font-serif: 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-track: 'Montserrat', sans-serif;
+  
+  /* Raios e Transições */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
   --radius-pill: 9999px;
-  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.2s ease;
 }
 
 /* --------------------------------------------------------------------------
-   2. Reset e Configurações Base
+   2. Reset & Correção Estrita de Overflow Mobile (Fix dos Cantos da Tela)
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -60,16 +70,31 @@ html {
   font-size: 16px;
   background-color: var(--bg-dark);
   color: var(--text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
   position: relative;
+  width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
   line-height: 1.6;
   background-color: var(--bg-dark);
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Wrapper Anti-Desvio */
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 img {
@@ -94,50 +119,13 @@ button, input {
 
 .container {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1220px;
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
 
 /* --------------------------------------------------------------------------
-   3. Efeitos de Fundo Ambient Glow (Luzes Azuis Volumétricas)
-   -------------------------------------------------------------------------- */
-.ambient-glow {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(120px);
-  opacity: 0.6;
-}
-
-.glow-top {
-  top: -150px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(5, 8, 17, 0) 70%);
-}
-
-.glow-mid {
-  top: 45%;
-  right: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(5, 8, 17, 0) 70%);
-}
-
-.glow-bottom {
-  bottom: 5%;
-  left: -200px;
-  width: 700px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(5, 8, 17, 0) 70%);
-}
-
-/* --------------------------------------------------------------------------
-   4. Cabeçalho / Navbar
+   3. Cabeçalho / Navbar Elegante em Cinza Grafite & Preto
    -------------------------------------------------------------------------- */
 .site-header {
   position: fixed;
@@ -145,19 +133,19 @@ button, input {
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1.1rem 0;
-  background: rgba(5, 8, 17, 0.6);
+  padding: 1rem 0;
+  background: rgba(18, 19, 21, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
   transition: var(--transition-smooth);
 }
 
 .site-header.scrolled {
-  padding: 0.8rem 0;
-  background: rgba(5, 8, 17, 0.92);
-  border-bottom-color: rgba(59, 130, 246, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 0.75rem 0;
+  background: rgba(14, 15, 17, 0.96);
+  border-bottom-color: var(--card-gray-border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 .nav-container {
@@ -166,43 +154,78 @@ button, input {
   justify-content: space-between;
 }
 
-/* Logo */
+/* Brand Logo com Monograma ED */
 .brand-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  gap: 0.85rem;
 }
 
-.logo-badge {
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-  color: #fff;
-  padding: 0.25rem 0.55rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 900;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+.brand-monogram {
+  width: 42px;
+  height: 42px;
+  background: #000000;
+  border: 1px solid var(--card-gray);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.logo-text {
+.mono-e {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
   color: #ffffff;
+  position: relative;
+  left: -2px;
+  line-height: 1;
 }
 
-.accent-text {
-  color: var(--cyan-accent);
+.mono-d {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--card-gray);
+  position: relative;
+  left: -6px;
+  top: 1px;
+  line-height: 1;
 }
 
-/* Status Operacional */
+.brand-naming {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.brand-sub {
+  font-family: var(--font-track);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--card-gray);
+}
+
+/* Indicador de Atendimento */
 .status-indicator {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.85rem;
   border-radius: var(--radius-pill);
   font-size: 0.8rem;
   color: var(--text-secondary);
@@ -212,33 +235,34 @@ button, input {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--whatsapp-green);
+  background: var(--whatsapp-light);
 }
 
 .status-dot.pulsing {
-  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
   animation: pulse-green 2s infinite;
 }
 
 @keyframes pulse-green {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
-/* Menu Links */
+/* Menu de Navegação */
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.6rem;
 }
 
 .nav-link {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: var(--text-secondary);
   position: relative;
   padding: 0.25rem 0;
+  transition: var(--transition-fast);
 }
 
 .nav-link:hover, .nav-link.active {
@@ -252,7 +276,7 @@ button, input {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--cyan-accent);
+  background: var(--card-gray);
   transition: width 0.3s ease;
 }
 
@@ -266,25 +290,24 @@ button, input {
   gap: 1rem;
 }
 
-.btn-pill-nav {
+.btn-header-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1.25rem;
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  background: #000000;
+  border: 1px solid var(--card-gray);
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 600;
   border-radius: var(--radius-pill);
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   transition: var(--transition-fast);
 }
 
-.btn-pill-nav:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 28px rgba(37, 99, 235, 0.7);
-  color: #ffffff;
+.btn-header-cta:hover {
+  background: var(--card-gray);
+  color: #000000;
+  border-color: #ffffff;
 }
 
 .mobile-toggle {
@@ -293,7 +316,7 @@ button, input {
   border: none;
   cursor: pointer;
   width: 32px;
-  height: 24px;
+  height: 22px;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -308,14 +331,13 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   5. Botões Globais & Componentes
+   4. Botões Globais & Tipografia
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
-  font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
   padding: 0.85rem 1.8rem;
@@ -327,117 +349,94 @@ button, input {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  background: #000000;
   color: #ffffff;
+  border: 1px solid var(--card-gray);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.btn-glow {
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-primary:hover, .btn-glow:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 0 40px rgba(59, 130, 246, 0.75);
-  color: #ffffff;
+.btn-primary:hover {
+  background: var(--card-gray);
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-medium);
 }
 
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.12);
-  border-color: var(--cyan-accent);
+  border-color: var(--card-gray);
   transform: translateY(-2px);
   color: #ffffff;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.9rem;
-  padding: 0.65rem 1.4rem;
+.btn-dark-titanium {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid var(--card-gray);
+  padding: 0.75rem 1.6rem;
 }
 
-.btn-outline:hover {
-  border-color: var(--cyan-accent);
-  background: rgba(56, 189, 248, 0.08);
-  transform: translateX(4px);
-}
-
-.btn-white {
-  background: #ffffff;
-  color: #050811;
-  font-weight: 700;
-}
-
-.btn-glow-white:hover {
-  background: #f1f5f9;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+.btn-dark-titanium:hover {
+  background: var(--card-gray);
+  color: #000000;
   transform: translateY(-2px);
 }
 
-/* Tipografia de Seção */
+.btn-outline-dark {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  padding: 0.75rem 1.6rem;
+}
+
+.btn-outline-dark:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--card-gray);
+}
+
 .sub-label {
   display: inline-block;
-  font-size: 0.8rem;
+  font-family: var(--font-track);
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--cyan-accent);
+  color: var(--card-gray-light);
   margin-bottom: 0.75rem;
 }
 
 .section-heading h2 {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   margin-bottom: 0.75rem;
+  color: #ffffff;
 }
 
 .section-heading p {
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 620px;
   margin-inline: auto;
   font-size: 1.05rem;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #ffffff 30%, #60a5fa 70%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* --------------------------------------------------------------------------
-   6. HERO SECTION (Visual MAX COLOR)
+   5. HERO SECTION (Minimalista Studio Cinza & Preto)
    -------------------------------------------------------------------------- */
 .hero-section {
   position: relative;
-  padding-top: 8.5rem;
-  padding-bottom: 4rem;
+  padding-top: 8rem;
+  padding-bottom: 4.5rem;
   text-align: center;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.hero-glow-halo {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.32) 0%, rgba(5, 8, 17, 0) 70%);
-  pointer-events: none;
-  z-index: -1;
-  filter: blur(70px);
+  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .hero-badge {
@@ -445,75 +444,74 @@ button, input {
   align-items: center;
   gap: 0.6rem;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  padding: 0.4rem 1rem;
+  border: 1px solid var(--border-medium);
+  padding: 0.4rem 1.1rem;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
-  color: var(--cyan-accent);
+  color: var(--card-gray-light);
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
 }
 
 .hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
-  font-weight: 900;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  font-weight: 800;
   line-height: 1.12;
-  letter-spacing: -1px;
-  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffffff;
   margin-bottom: 1.25rem;
 }
 
+.hero-serif-sub {
+  font-family: var(--font-track);
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--card-gray);
+  display: block;
+  margin-top: 0.5rem;
+}
+
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
   color: var(--text-secondary);
-  max-width: 720px;
+  max-width: 680px;
   margin-inline: auto;
   margin-bottom: 2.2rem;
-  font-weight: 400;
 }
 
 .hero-cta-group {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1.2rem;
   flex-wrap: wrap;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Showcase do Carro com Reflexo */
 .hero-car-showcase {
   position: relative;
   max-width: 1040px;
   margin-inline: auto;
   margin-top: 1rem;
-  perspective: 1000px;
 }
 
 .hero-car-image {
   width: 100%;
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(37, 99, 235, 0.25);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  transition: transform 0.5s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--border-medium);
 }
 
-.hero-car-showcase:hover .hero-car-image {
-  transform: scale(1.015);
-}
-
-/* Efeito de Reflexo no Chão */
-.car-floor-reflection {
+.car-floor-shadow {
   width: 90%;
-  height: 40px;
+  height: 25px;
   margin-inline: auto;
-  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.45) 0%, rgba(56, 189, 248, 0.2) 40%, rgba(5, 8, 17, 0) 80%);
-  filter: blur(15px);
-  margin-top: -20px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 75%);
+  margin-top: -10px;
 }
 
-/* Barra de Chips Estatísticos Flutuantes */
+/* Barra de Estatísticas em Cinza */
 .hero-stats-bar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -525,9 +523,8 @@ button, input {
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   padding: 1.2rem 1.5rem;
   border-radius: var(--radius-md);
   text-align: left;
@@ -535,27 +532,26 @@ button, input {
 }
 
 .stat-card:hover {
-  border-color: var(--border-glow);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+  border-color: var(--card-gray);
+  transform: translateY(-2px);
 }
 
 .stat-icon {
   width: 44px;
   height: 44px;
-  border-radius: 10px;
-  background: rgba(37, 99, 235, 0.15);
-  color: var(--cyan-accent);
+  border-radius: var(--radius-sm);
+  background: #000000;
+  border: 1px solid var(--card-gray-border);
+  color: var(--card-gray-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
 }
 
 .stat-info strong {
   display: block;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
 }
@@ -566,71 +562,204 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   7. SEÇÃO DE MARCAS & MANIFESTO
+   6. SEÇÃO CARTÃO OFICIAL ÉDIPO PIMENTEL (Fiel à Imagem Fornecida)
    -------------------------------------------------------------------------- */
-.brands-section {
-  padding: 4.5rem 0;
-  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
+.brand-card-section {
+  padding: 5rem 0;
+  background: var(--bg-dark);
 }
 
-.brands-header-grid {
+.brand-showcase-box {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 3.5rem;
   align-items: center;
-  margin-bottom: 2.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-.brands-title-block h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+/* Réplica do Cartão de Visitas */
+.business-card-replica {
+  background-color: var(--card-gray);
+  color: #000000;
+  border-radius: var(--radius-md);
+  padding: 2.2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  display: grid;
+  grid-template-columns: 80px 30px 1fr;
+  align-items: center;
+  border: 1px solid #9ba0a6;
+  position: relative;
+}
+
+.card-left-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-ed-monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.c-mono-e {
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1;
+  position: relative;
+  left: -2px;
+}
+
+.c-mono-d {
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1;
+  position: relative;
+  left: -18px;
+  top: 6px;
+}
+
+.card-divider-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+}
+
+.card-divider-hairline {
+  width: 1px;
+  flex-grow: 1;
+  background: #000000;
+}
+
+.card-diamond-top, .card-diamond-mid, .card-diamond-bottom {
+  width: 6px;
+  height: 6px;
+  background: #000000;
+  transform: rotate(45deg);
+  margin: 3px 0;
+}
+
+.card-right-col {
+  padding-left: 0.75rem;
+}
+
+.card-owner-name {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
   font-weight: 800;
-  line-height: 1.2;
-  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #000000;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
 }
 
-.brands-text-block p {
+.card-service-title {
+  font-family: var(--font-track);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #000000;
+  margin-bottom: 0.6rem;
+}
+
+.card-machine-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #000000;
+  margin-bottom: 1.25rem;
+}
+
+.card-tagline {
+  font-family: var(--font-track);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.card-footer-info {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.card-contact-line {
+  font-family: var(--font-track);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.card-email-line {
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+}
+
+/* Coluna de Texto ao Lado do Cartão */
+.brand-text-content h2 {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.brand-text-content p {
   color: var(--text-secondary);
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
 }
 
-.brand-tags-track {
+.brand-features-list {
+  margin-bottom: 2rem;
+}
+
+.brand-features-list li {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  margin-bottom: 0.65rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-}
-
-.brand-tag {
-  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-pill);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: var(--transition-fast);
+  gap: 0.75rem;
 }
 
-.brand-tag:hover {
-  color: #ffffff;
-  border-color: var(--cyan-accent);
-  background: rgba(56, 189, 248, 0.08);
+.brand-features-list i {
+  color: var(--card-gray-light);
+}
+
+.brand-actions-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* --------------------------------------------------------------------------
-   8. SEÇÃO DE SERVIÇOS (Cards com Fotos Geradas)
+   7. SEÇÃO DE SERVIÇOS (Fotos Reais & Design Cinza/Preto)
    -------------------------------------------------------------------------- */
 .services-section {
   padding: 6rem 0;
-  position: relative;
-  z-index: 1;
+  background: var(--bg-dark-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .services-grid {
@@ -641,9 +770,8 @@ button, input {
 }
 
 .service-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
@@ -652,9 +780,9 @@ button, input {
 }
 
 .service-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--border-glow);
-  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.2);
+  transform: translateY(-5px);
+  border-color: var(--card-gray-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .card-img-wrapper {
@@ -668,25 +796,24 @@ button, input {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s ease;
 }
 
 .service-card:hover .card-img-wrapper img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 .card-badge {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(5, 8, 17, 0.85);
-  backdrop-filter: blur(10px);
-  color: var(--cyan-accent);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--card-gray);
+  color: #ffffff;
   font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.35rem 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(56, 189, 248, 0.4);
 }
 
 .card-body {
@@ -697,7 +824,7 @@ button, input {
 }
 
 .card-body h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
@@ -715,19 +842,19 @@ button, input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-subtle);
   padding-top: 1.25rem;
 }
 
 .service-price-hint {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--cyan-accent);
+  color: var(--card-gray-light);
 }
 
 .btn-card-action {
-  background: rgba(37, 99, 235, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: #000000;
+  border: 1px solid var(--card-gray);
   color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: var(--radius-pill);
@@ -744,19 +871,17 @@ button, input {
   background: var(--whatsapp-green);
   border-color: var(--whatsapp-green);
   color: #ffffff;
-  box-shadow: 0 0 15px var(--whatsapp-glow);
 }
 
-/* Card Destacado em Azul Puro (Igual à Imagem 1) */
+/* Card Destacado em Cinza Studio */
 .highlight-card {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
-  justify-content: center;
+  background: var(--card-gray);
+  border: 1px solid #a3a7ac;
+  color: #000000;
 }
 
 .highlight-content {
-  padding: 2.5rem 2rem;
+  padding: 2.2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -767,51 +892,61 @@ button, input {
 
 .highlight-icon {
   font-size: 2.5rem;
-  color: #ffffff;
-  margin-bottom: 1.25rem;
+  color: #000000;
+  margin-bottom: 1rem;
 }
 
 .highlight-card h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 0.85rem;
+  color: #000000;
+  margin-bottom: 0.75rem;
 }
 
 .highlight-card p {
-  color: rgba(255, 255, 255, 0.9);
+  color: #111111;
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
 }
 
 .highlight-benefits {
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
   width: 100%;
 }
 
 .highlight-benefits li {
   font-size: 0.9rem;
-  color: #ffffff;
-  margin-bottom: 0.6rem;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   gap: 0.6rem;
 }
 
-.highlight-benefits i {
-  color: var(--cyan-accent);
+.btn-card-highlight {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+}
+
+.btn-card-highlight:hover {
+  background: #1c1d20;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
 /* --------------------------------------------------------------------------
-   9. ANTES & DEPOIS INTERATIVO (Slider)
+   8. ANTES & DEPOIS (Slider Touch-Safe sem Quebra no Mobile)
    -------------------------------------------------------------------------- */
 .before-after-section {
   padding: 5rem 0;
-  background: var(--bg-dark-secondary);
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-dark);
 }
 
 .comparison-container {
@@ -822,10 +957,11 @@ button, input {
   margin-top: 3rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
   user-select: none;
   cursor: ew-resize;
+  touch-action: pan-y;
 }
 
 .comp-image {
@@ -843,9 +979,8 @@ button, input {
   pointer-events: none;
 }
 
-/* Simulação de Opacidade/Riscos no "Antes" */
 .filter-swirls {
-  filter: brightness(0.65) contrast(0.85) saturate(0.6) blur(0.6px);
+  filter: brightness(0.7) contrast(0.85) grayscale(20%);
 }
 
 .comp-after {
@@ -863,25 +998,26 @@ button, input {
 .comp-tag {
   position: absolute;
   bottom: 1.5rem;
-  font-size: 0.8rem;
-  font-weight: 800;
+  font-family: var(--font-track);
+  font-size: 0.75rem;
+  font-weight: 700;
   letter-spacing: 1px;
   padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
-  backdrop-filter: blur(10px);
 }
 
 .tag-before {
   right: 1.5rem;
-  background: rgba(220, 38, 38, 0.8);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #ef4444;
+  color: #ef4444;
 }
 
 .tag-after {
   left: 1.5rem;
-  background: rgba(37, 99, 235, 0.85);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--card-gray);
   color: #ffffff;
-  box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
 }
 
 .comp-slider-handle {
@@ -903,20 +1039,19 @@ button, input {
   flex-grow: 1;
   width: 2px;
   background: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .handle-circle {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: #2563eb;
-  border: 3px solid #ffffff;
+  background: #000000;
+  border: 2px solid #ffffff;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
 .comparison-caption {
@@ -926,10 +1061,11 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   10. SEÇÃO DE DIFERENCIAIS ("WE CAN DO WHAT OTHERS CAN'T DO")
+   9. SEÇÃO DE DIFERENCIAIS
    -------------------------------------------------------------------------- */
 .differentials-section {
   padding: 6rem 0;
+  background: var(--bg-dark-secondary);
 }
 
 .diff-header-row {
@@ -941,10 +1077,9 @@ button, input {
 }
 
 .diff-header-title h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -955,60 +1090,58 @@ button, input {
 
 .diff-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
 .diff-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 2.2rem 1.8rem;
   transition: var(--transition-smooth);
 }
 
 .diff-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--border-glow);
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+  transform: translateY(-4px);
+  border-color: var(--card-gray-border);
 }
 
 .diff-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: rgba(37, 99, 235, 0.12);
-  color: var(--cyan-accent);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: #000000;
+  border: 1px solid var(--card-gray);
+  color: var(--card-gray-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
 }
 
 .diff-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   color: #ffffff;
 }
 
 .diff-card p {
   color: var(--text-secondary);
   font-size: 0.95rem;
-  line-height: 1.6;
 }
 
-/* Banner do Estúdio com Luzes Hexagonais */
+/* Banner com Foto Real do Estúdio */
 .studio-photo-banner {
   position: relative;
   margin-top: 3.5rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
 .studio-img {
@@ -1022,7 +1155,7 @@ button, input {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(0deg, rgba(5, 8, 17, 0.95) 0%, rgba(5, 8, 17, 0.6) 60%, transparent 100%);
+  background: linear-gradient(0deg, rgba(14, 15, 17, 0.95) 0%, rgba(14, 15, 17, 0.5) 60%, transparent 100%);
   padding: 2.5rem;
   display: flex;
   align-items: flex-end;
@@ -1035,15 +1168,16 @@ button, input {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--cyan-accent);
-  font-size: 0.85rem;
+  color: var(--card-gray-light);
+  font-family: var(--font-track);
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 .studio-text h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
@@ -1056,35 +1190,28 @@ button, input {
   max-width: 550px;
 }
 
-.btn-blur {
-  backdrop-filter: blur(15px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
 /* --------------------------------------------------------------------------
-   11. SEÇÃO DE ORÇAMENTO & WHATSAPP INTERATIVO
+   10. CALCULADORA & SIMULADOR DE ORÇAMENTO WHATSAPP
    -------------------------------------------------------------------------- */
 .calculator-section {
   padding: 6rem 0;
-  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
+  background: var(--bg-dark);
 }
 
 .calculator-card {
   max-width: 940px;
   margin-inline: auto;
   margin-top: 3.5rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   padding: 2.5rem;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
 }
 
 .form-step {
   margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 2.2rem;
 }
 
@@ -1092,27 +1219,28 @@ button, input {
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.25rem;
 }
 
 .step-num {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--primary-blue);
+  background: #000000;
+  border: 1px solid var(--card-gray);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
-/* Grid de Categorias de Veículos */
 .vehicle-options-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -1128,8 +1256,8 @@ button, input {
 }
 
 .option-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-light);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1.25rem 1rem;
   text-align: center;
@@ -1138,15 +1266,13 @@ button, input {
 
 .option-box i {
   font-size: 1.75rem;
-  color: var(--text-muted);
+  color: var(--card-gray-light);
   margin-bottom: 0.65rem;
   display: block;
-  transition: var(--transition-fast);
 }
 
 .option-box strong {
   display: block;
-  font-family: var(--font-display);
   font-size: 0.95rem;
   color: #ffffff;
   margin-bottom: 0.25rem;
@@ -1159,16 +1285,15 @@ button, input {
 }
 
 .vehicle-option input:checked + .option-box {
-  background: rgba(37, 99, 235, 0.15);
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+  background: #000000;
+  border-color: var(--card-gray);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .vehicle-option input:checked + .option-box i {
-  color: var(--cyan-accent);
+  color: #ffffff;
 }
 
-/* Grid de Seleção de Serviços */
 .services-checkbox-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -1179,8 +1304,8 @@ button, input {
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-light);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1rem 1.15rem;
   cursor: pointer;
@@ -1188,8 +1313,7 @@ button, input {
 }
 
 .checkbox-option:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: var(--card-gray-border);
 }
 
 .checkbox-option input {
@@ -1197,10 +1321,10 @@ button, input {
 }
 
 .check-box-custom {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  border: 2px solid var(--text-muted);
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid var(--card-gray);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1211,23 +1335,19 @@ button, input {
 
 .check-box-custom::after {
   content: '✓';
-  color: #ffffff;
+  color: #000000;
   font-size: 0.85rem;
   font-weight: 900;
   opacity: 0;
-  transform: scale(0.5);
-  transition: var(--transition-fast);
 }
 
 .checkbox-option input:checked + .check-box-custom {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+  background: var(--card-gray);
+  border-color: #ffffff;
 }
 
 .checkbox-option input:checked + .check-box-custom::after {
   opacity: 1;
-  transform: scale(1);
 }
 
 .check-info strong {
@@ -1240,10 +1360,8 @@ button, input {
 .check-info small {
   font-size: 0.8rem;
   color: var(--text-secondary);
-  display: block;
 }
 
-/* Campos de Dados do Cliente */
 .inputs-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1267,13 +1385,13 @@ button, input {
 .input-with-icon i {
   position: absolute;
   left: 1.15rem;
-  color: var(--text-muted);
+  color: var(--card-gray-light);
 }
 
 .input-with-icon input {
   width: 100%;
-  background: rgba(5, 8, 17, 0.8);
-  border: 1px solid var(--border-light);
+  background: #000000;
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-md);
   padding: 0.85rem 1rem 0.85rem 2.85rem;
   color: #ffffff;
@@ -1283,8 +1401,7 @@ button, input {
 }
 
 .input-with-icon input:focus {
-  border-color: var(--cyan-accent);
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+  border-color: var(--card-gray);
 }
 
 .error-msg {
@@ -1295,23 +1412,16 @@ button, input {
   min-height: 1rem;
 }
 
-/* Resumo e Ação do WhatsApp */
 .calc-summary-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
-  background: rgba(5, 8, 17, 0.7);
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  background: #000000;
+  border: 1px solid var(--card-gray-border);
   border-radius: var(--radius-md);
   padding: 1.75rem 2rem;
-}
-
-.summary-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
 }
 
 .summary-line {
@@ -1326,29 +1436,24 @@ button, input {
   color: #ffffff;
 }
 
-.summary-line.highlight-price {
-  margin-top: 0.35rem;
-}
-
 .price-val {
-  font-family: var(--font-display);
-  font-size: 1.5rem !important;
-  color: var(--cyan-accent) !important;
+  font-family: var(--font-serif);
+  font-size: 1.6rem !important;
+  color: #ffffff !important;
   font-weight: 800;
 }
 
 .btn-whatsapp-large {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: var(--whatsapp-green);
   color: #ffffff;
-  font-size: 1.05rem;
+  font-size: 1rem;
   padding: 1rem 2rem;
-  box-shadow: 0 0 30px var(--whatsapp-glow);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-whatsapp-large:hover {
+  background: var(--whatsapp-hover);
   transform: translateY(-2px);
-  box-shadow: 0 0 45px rgba(34, 197, 94, 0.6);
   color: #ffffff;
 }
 
@@ -1363,28 +1468,27 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   12. SEÇÃO DE AVALIAÇÕES DO GOOGLE
+   11. SEÇÃO DE AVALIAÇÕES GOOGLE
    -------------------------------------------------------------------------- */
 .reviews-section {
   padding: 6rem 0;
-  position: relative;
+  background: var(--bg-dark-secondary);
 }
 
 .google-badge-card {
   display: inline-flex;
   align-items: center;
   gap: 1.5rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-pill);
   padding: 0.75rem 2rem;
   margin-bottom: 2rem;
 }
 
 .google-logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 1.4rem;
   font-weight: 800;
 }
 
@@ -1400,8 +1504,7 @@ button, input {
 }
 
 .score-num {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: #ffffff;
 }
@@ -1425,19 +1528,16 @@ button, input {
 }
 
 .review-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  transition: var(--transition-fast);
 }
 
 .review-card:hover {
-  border-color: var(--border-glow);
-  transform: translateY(-4px);
+  border-color: var(--card-gray-border);
 }
 
 .review-top {
@@ -1448,20 +1548,18 @@ button, input {
 }
 
 .avatar {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.25rem;
   font-weight: 700;
 }
 
-.avatar-orange { background: #ea580c; }
-.avatar-purple { background: #9333ea; }
+.avatar-neutral { background: var(--card-gray); color: #000000; }
+.avatar-black { background: #000000; border: 1px solid var(--card-gray); color: #ffffff; }
 
 .reviewer-meta strong {
   display: block;
@@ -1474,17 +1572,11 @@ button, input {
   color: var(--text-muted);
 }
 
-.badge-verified {
-  color: var(--whatsapp-green);
-  font-weight: 600;
-}
-
 .review-stars {
   margin-left: auto;
   color: #f59e0b;
   display: flex;
   gap: 0.15rem;
-  font-size: 0.85rem;
 }
 
 .review-quote {
@@ -1502,95 +1594,19 @@ button, input {
   gap: 0.4rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--cyan-accent);
-  background: rgba(56, 189, 248, 0.08);
+  color: var(--card-gray-light);
+  background: rgba(255, 255, 255, 0.05);
   padding: 0.35rem 0.75rem;
   border-radius: var(--radius-pill);
   align-self: flex-start;
 }
 
-/* Card Oficial Google 5.0 Estrelas */
-.google-official-card {
-  background: linear-gradient(135deg, rgba(66, 133, 244, 0.12), rgba(52, 168, 83, 0.08), rgba(251, 188, 5, 0.08));
-  border-color: rgba(66, 133, 244, 0.35);
-}
-
-.google-official-top {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.google-icon-round {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #4285F4;
-}
-
-.google-official-meta strong {
-  display: block;
-  color: #ffffff;
-  font-size: 1.05rem;
-}
-
-.google-official-meta span {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.google-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--whatsapp-green);
-  background: rgba(34, 197, 94, 0.12);
-  padding: 0.35rem 0.8rem;
-  border-radius: var(--radius-pill);
-  margin-bottom: 1.25rem;
-  align-self: flex-start;
-}
-
-.btn-outline-google {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(59, 130, 246, 0.5);
-  background: rgba(37, 99, 235, 0.15);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.btn-outline-google:hover {
-  background: var(--whatsapp-green);
-  border-color: var(--whatsapp-green);
-  box-shadow: 0 0 20px var(--whatsapp-glow);
-  color: #ffffff;
-}
-
 /* --------------------------------------------------------------------------
-   13. SEÇÃO DE LOCALIZAÇÃO & GOOGLE MAPS
+   12. LOCALIZAÇÃO & GOOGLE MAPS
    -------------------------------------------------------------------------- */
 .location-section {
   padding: 6rem 0;
-  background: var(--bg-dark-secondary);
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-dark);
 }
 
 .location-layout {
@@ -1602,9 +1618,8 @@ button, input {
 }
 
 .location-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   padding: 2.5rem;
   display: flex;
@@ -1618,32 +1633,32 @@ button, input {
   gap: 1rem;
   margin-bottom: 1.75rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .loc-badge-icon {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
-  background: rgba(37, 99, 235, 0.15);
-  color: var(--cyan-accent);
+  border-radius: var(--radius-sm);
+  background: #000000;
+  border: 1px solid var(--card-gray);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .loc-card-header h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 700;
   color: #ffffff;
 }
 
 .loc-status-pill {
-  font-size: 0.75rem;
-  color: var(--whatsapp-green);
-  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--card-gray-light);
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -1663,7 +1678,7 @@ button, input {
 
 .loc-item-icon {
   font-size: 1.15rem;
-  color: var(--cyan-accent);
+  color: var(--card-gray-light);
   margin-top: 0.2rem;
 }
 
@@ -1677,15 +1692,15 @@ button, input {
 .loc-item-content p {
   font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.5;
 }
 
 .phone-link {
-  color: var(--cyan-accent);
+  color: #ffffff;
   font-weight: 600;
 }
 
 .phone-link:hover {
+  color: var(--card-gray-light);
   text-decoration: underline;
 }
 
@@ -1695,7 +1710,7 @@ button, input {
   gap: 0.4rem;
   margin-top: 0.5rem;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   padding: 0.3rem 0.8rem;
   border-radius: var(--radius-sm);
@@ -1706,8 +1721,7 @@ button, input {
 
 .btn-copy-address:hover {
   color: #ffffff;
-  border-color: var(--cyan-accent);
-  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--card-gray);
 }
 
 .loc-action-buttons {
@@ -1717,7 +1731,8 @@ button, input {
 }
 
 .btn-maps-route {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  background: #000000;
+  border: 1px solid var(--card-gray);
   color: #ffffff;
   font-size: 0.85rem;
   padding: 0.8rem 1rem;
@@ -1727,18 +1742,16 @@ button, input {
   justify-content: center;
   gap: 0.5rem;
   font-weight: 600;
-  box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
 }
 
 .btn-maps-route:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(37, 99, 235, 0.65);
-  color: #ffffff;
+  background: var(--card-gray);
+  color: #000000;
 }
 
 .btn-waze {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--border-medium);
   color: #ffffff;
   font-size: 0.85rem;
   padding: 0.8rem 1rem;
@@ -1751,19 +1764,16 @@ button, input {
 }
 
 .btn-waze:hover {
-  background: rgba(51, 204, 255, 0.15);
-  border-color: #33ccff;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--card-gray);
 }
 
-/* Embed do Mapa */
 .map-embed-wrapper {
   position: relative;
   min-height: 480px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-medium);
 }
 
 .google-map-iframe {
@@ -1771,15 +1781,14 @@ button, input {
   height: 100%;
   min-height: 480px;
   border: none;
-  filter: contrast(1.05) saturate(1.1);
+  filter: contrast(1.05);
 }
 
 .map-overlay-badge {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background: rgba(5, 8, 17, 0.9);
-  backdrop-filter: blur(10px);
+  background: rgba(18, 19, 21, 0.92);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-pill);
   font-size: 0.8rem;
@@ -1788,26 +1797,23 @@ button, input {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--border-subtle);
   pointer-events: none;
 }
 
 /* --------------------------------------------------------------------------
-   14. SEÇÃO FINAL: STAND OUT FROM THE CROWD (Linha de 3 Carros)
+   13. SEÇÃO STAND OUT (Supercarros em Estúdio)
    -------------------------------------------------------------------------- */
 .standout-section {
   padding: 6rem 0 2rem;
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.25) 0%, rgba(5, 8, 17, 1) 75%);
+  background: var(--bg-dark-secondary);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .standout-content h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.4rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
   margin-bottom: 1.25rem;
 }
 
@@ -1823,34 +1829,30 @@ button, input {
   max-width: 1100px;
   margin-inline: auto;
   margin-top: 3rem;
-  position: relative;
 }
 
 .standout-cars-image {
   width: 100%;
   border-radius: var(--radius-lg);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 50px rgba(37, 99, 235, 0.35);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--border-medium);
 }
 
 .standout-cars-reflection {
   width: 95%;
-  height: 50px;
+  height: 25px;
   margin-inline: auto;
-  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.5) 0%, rgba(56, 189, 248, 0.2) 40%, rgba(5, 8, 17, 0) 80%);
-  filter: blur(20px);
-  margin-top: -25px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 75%);
+  margin-top: -10px;
 }
 
 /* --------------------------------------------------------------------------
-   15. RODAPÉ (Footer)
+   14. RODAPÉ (Footer)
    -------------------------------------------------------------------------- */
 .site-footer {
-  background: #020409;
-  border-top: 1px solid var(--border-light);
+  background: #090a0c;
+  border-top: 1px solid var(--border-subtle);
   padding: 5rem 0 2rem;
-  position: relative;
-  z-index: 1;
 }
 
 .footer-grid {
@@ -1860,15 +1862,10 @@ button, input {
   margin-bottom: 4rem;
 }
 
-.brand-col .brand-logo {
-  margin-bottom: 1.25rem;
-}
-
 .footer-desc {
   color: var(--text-muted);
   font-size: 0.9rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin: 1.25rem 0;
 }
 
 .footer-social-links {
@@ -1880,27 +1877,25 @@ button, input {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: var(--transition-fast);
 }
 
 .footer-social-links a:hover {
-  background: var(--primary-blue);
-  color: #ffffff;
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
-  transform: translateY(-2px);
+  background: var(--card-gray);
+  color: #000000;
+  border-color: #ffffff;
 }
 
 .footer-col h4 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.25rem;
@@ -1913,11 +1908,10 @@ button, input {
 .footer-links a {
   color: var(--text-muted);
   font-size: 0.9rem;
-  transition: var(--transition-fast);
 }
 
 .footer-links a:hover {
-  color: var(--cyan-accent);
+  color: #ffffff;
   padding-left: 4px;
 }
 
@@ -1931,11 +1925,11 @@ button, input {
 }
 
 .footer-contact-item i {
-  color: var(--cyan-accent);
+  color: var(--card-gray-light);
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-subtle);
   padding-top: 2rem;
   font-size: 0.85rem;
   color: var(--text-muted);
@@ -1962,15 +1956,14 @@ button, input {
   font-size: 0.85rem;
   cursor: pointer;
   padding: 0;
-  transition: var(--transition-fast);
 }
 
 .footer-text-btn:hover {
-  color: var(--cyan-accent);
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------
-   16. BOTÃO FLUTUANTE DO WHATSAPP COM NOTIFICAÇÃO
+   15. BOTÃO FLUTUANTE DO WHATSAPP (Verde Natural, Sem Neon)
    -------------------------------------------------------------------------- */
 .floating-whatsapp-container {
   position: fixed;
@@ -1984,38 +1977,31 @@ button, input {
 }
 
 .floating-whatsapp-btn {
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: var(--whatsapp-green);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.85rem;
-  box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+  font-size: 1.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   position: relative;
   transition: var(--transition-smooth);
-  animation: float-pulse 3s infinite ease-in-out;
-}
-
-@keyframes float-pulse {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
 }
 
 .floating-whatsapp-btn:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 0 40px rgba(34, 197, 94, 0.9);
-  color: #ffffff;
+  background: var(--whatsapp-hover);
+  transform: scale(1.08);
 }
 
 .whatsapp-badge {
   position: absolute;
   top: -2px;
   right: -2px;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #ef4444;
   color: #ffffff;
@@ -2028,14 +2014,13 @@ button, input {
 }
 
 .whatsapp-tooltip {
-  background: rgba(5, 8, 17, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(18, 19, 21, 0.95);
+  border: 1px solid var(--border-medium);
   padding: 0.55rem 1rem;
   border-radius: var(--radius-pill);
   font-size: 0.8rem;
   color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   pointer-events: none;
   opacity: 0;
   transform: translateX(10px);
@@ -2048,22 +2033,21 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   17. TOAST NOTIFICATION & MODAIS
+   16. TOAST NOTIFICATION & MODAIS
    -------------------------------------------------------------------------- */
 .toast-container {
   position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: rgba(5, 8, 17, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid var(--cyan-accent);
+  background: #000000;
+  border: 1px solid var(--card-gray);
   color: #ffffff;
   padding: 0.85rem 1.6rem;
   border-radius: var(--radius-pill);
   font-size: 0.9rem;
   font-weight: 600;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--cyan-glow);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   z-index: 2000;
   pointer-events: none;
   opacity: 0;
@@ -2078,14 +2062,13 @@ button, input {
   opacity: 1;
 }
 
-/* Modais de Segurança e LGPD */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(10px);
   z-index: 3000;
   display: flex;
@@ -2103,14 +2086,14 @@ button, input {
 }
 
 .modal-box {
-  background: #090e1c;
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: var(--bg-surface);
+  border: 1px solid var(--card-gray-border);
   border-radius: var(--radius-lg);
   max-width: 600px;
   width: 100%;
   padding: 2.2rem;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(37, 99, 235, 0.2);
-  transform: scale(0.95);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  transform: scale(0.96);
   transition: var(--transition-smooth);
 }
 
@@ -2124,12 +2107,12 @@ button, input {
   justify-content: space-between;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .modal-header h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -2143,7 +2126,6 @@ button, input {
   font-size: 1.6rem;
   cursor: pointer;
   line-height: 1;
-  transition: var(--transition-fast);
 }
 
 .btn-close-modal:hover {
@@ -2175,12 +2157,12 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   18. ANIMAÇÕES DE REVEAL AO ROLAR (Scroll Animations)
+   17. ANIMAÇÕES DE REVEAL (Suaves e Sutis, Sem Neons)
    -------------------------------------------------------------------------- */
 .reveal-item {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(25px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -2190,12 +2172,13 @@ button, input {
 }
 
 /* --------------------------------------------------------------------------
-   19. RESPONSIVIDADE (Mobile & Tablet - Idêntico aos Mockups da Imagem 1)
+   18. RESPONSIVIDADE E FIXES MOBILE
+   (Impede qualquer desvio lateral ou arrasto de cantos)
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
-  .brands-header-grid, .diff-header-row, .location-layout {
+  .brand-showcase-box, .diff-header-row, .location-layout {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
   }
   
   .footer-grid {
@@ -2209,17 +2192,24 @@ button, input {
 }
 
 @media (max-width: 768px) {
+  /* Fix Mobile Scroll & Layout */
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
   .nav-menu {
     position: fixed;
-    top: 70px;
+    top: 68px;
     left: 0;
     width: 100%;
-    background: rgba(5, 8, 17, 0.98);
+    background: rgba(14, 15, 17, 0.98);
     backdrop-filter: blur(25px);
     flex-direction: column;
-    padding: 2.5rem 1.5rem;
-    gap: 1.5rem;
-    border-bottom: 1px solid var(--border-glow);
+    padding: 2.2rem 1.5rem;
+    gap: 1.35rem;
+    border-bottom: 1px solid var(--card-gray-border);
     transform: translateY(-150%);
     transition: var(--transition-smooth);
     z-index: 998;
@@ -2233,12 +2223,53 @@ button, input {
     display: flex;
   }
   
-  .btn-pill-nav {
+  .btn-header-cta {
     display: none;
   }
   
   .hero-section {
     padding-top: 6.5rem;
+  }
+  
+  /* Ajustes do Cartão Oficial no Mobile */
+  .brand-showcase-box {
+    padding: 1.5rem;
+  }
+
+  .business-card-replica {
+    grid-template-columns: 60px 20px 1fr;
+    padding: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .c-mono-e, .c-mono-d {
+    font-size: 3.5rem;
+  }
+
+  .c-mono-d {
+    left: -12px;
+  }
+
+  .card-owner-name {
+    font-size: 1.3rem;
+  }
+
+  .card-service-title {
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+  }
+
+  .card-tagline {
+    font-size: 0.58rem;
+  }
+
+  .card-contact-line {
+    font-size: 0.65rem;
+  }
+
+  .card-email-line {
+    font-size: 0.58rem;
+    word-break: break-all;
   }
   
   .inputs-row {
@@ -2250,6 +2281,7 @@ button, input {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
+    padding: 1.5rem;
   }
   
   .btn-whatsapp-large {
@@ -2261,7 +2293,8 @@ button, input {
   }
   
   .comparison-container {
-    height: 340px;
+    height: 320px;
+    width: 100%;
   }
   
   .footer-grid {

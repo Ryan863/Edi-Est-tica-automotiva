@@ -1,19 +1,20 @@
 /**
- * EDI ESTÉTICA AUTOMOTIVA - JAVASCRIPT PRINCIPAL
- * Módulos: WhatsApp Builder, Google Maps, Antes & Depois, Animações e Segurança Web
+ * ÉDIPO PIMENTEL - ESTÉTICA AUTOMOTIVA & DETALHAMENTO PREMIUM
+ * Módulos: WhatsApp Builder, Google Maps, Slider Antes/Depois, Animações e Segurança
  */
 
 const EDIApp = (() => {
   'use strict';
 
-  // Configurações Oficiais da Empresa (Extraídas do Perfil no Google)
+  // Configurações Oficiais da Empresa (Cartão e Perfil Oficial)
   const CONFIG = {
-    whatsappNumber: '5549988449865', // (49) 98844-9865
-    businessName: 'EDI Estética Automotiva',
+    whatsappNumber: '5549988449865', // (49) 9.8844-9865
+    businessName: 'Édipo Pimentel Estética Automotiva',
+    email: 'edipopimentel0307@yahoo.com',
     address: "Rua Luiza Piovesan Martini, 50 - Loteamento Trevisan, Bairro São Jorge - Herval d'Oeste - SC, 89610-000",
     mapsUrl: "https://maps.google.com/?q=Rua+Luiza+Piovesan+Martini,+50,+Herval+d%27Oeste+-+SC",
     wazeUrl: "https://waze.com/ul?q=Rua+Luiza+Piovesan+Martini+50+Herval+d+Oeste",
-    rateLimitCooldownMs: 2500 // Prevenção contra spam de cliques
+    rateLimitCooldownMs: 2500 // Proteção contra múltiplos cliques
   };
 
   // Multiplicadores por Porte de Veículo
@@ -27,14 +28,8 @@ const EDIApp = (() => {
   let lastSubmitTime = 0;
 
   /* ==========================================================================
-     1. Módulo de Segurança Web Básica (Anti-XSS, Sanitização e Anti-Spam)
+     1. Módulo de Segurança Web Básica (Anti-XSS e Sanitização)
      ========================================================================== */
-  
-  /**
-   * Sanitiza strings para neutralizar injeções de script (XSS)
-   * @param {string} str - Texto recebido do usuário
-   * @returns {string} - Texto seguro sem tags executáveis
-   */
   const sanitizeInput = (str) => {
     if (!str || typeof str !== 'string') return '';
     return str
@@ -47,16 +42,13 @@ const EDIApp = (() => {
       .replace(/\//g, '&#x2F;');
   };
 
-  /**
-   * Remove caracteres não permitidos para envio limpo
-   */
   const cleanPlainText = (str) => {
     if (!str) return '';
     return str.trim().replace(/[<>]/g, '');
   };
 
   /* ==========================================================================
-     2. Status Operacional em Tempo Real (Horário de Funcionamento)
+     2. Status Operacional em Tempo Real
      ========================================================================== */
   const initBusinessStatus = () => {
     const dot = document.getElementById('business-dot');
@@ -77,27 +69,27 @@ const EDIApp = (() => {
         isOpen = true;
         closingTime = '18:30';
       }
-    } else if (day === 6) { // Sábado: 08:00 - 14:00
-      if (currentTime >= 8.0 && currentTime < 14.0) {
+    } else if (day === 6) { // Sábado: 08:00 - 13:00 com agendamento
+      if (currentTime >= 8.0 && currentTime < 13.0) {
         isOpen = true;
-        closingTime = '14:00';
+        closingTime = '13:00';
       }
     }
 
     if (isOpen) {
       dot.className = 'status-dot pulsing';
-      dot.style.background = 'var(--whatsapp-green)';
+      dot.style.background = 'var(--whatsapp-light)';
       label.textContent = `Estúdio Aberto Hoje (até às ${closingTime})`;
     } else {
       dot.className = 'status-dot';
-      dot.style.background = '#eab308';
-      const openMessage = day === 0 ? 'Abre amanhã às 08:00' : (currentTime < 8 ? 'Abre hoje às 08:00' : 'Abre amanhã às 08:00');
+      dot.style.background = 'var(--card-gray)';
+      const openMessage = day === 0 ? 'Abre segunda às 08:00' : (currentTime < 8 ? 'Abre hoje às 08:00' : 'Abre amanhã às 08:00');
       label.textContent = `Fechado no momento (${openMessage})`;
     }
   };
 
   /* ==========================================================================
-     3. Simulador de Orçamento & Integração com WhatsApp
+     3. Simulador de Orçamento & Integração WhatsApp Oficial
      ========================================================================== */
   const calculateEstimate = () => {
     const vehicleRadio = document.querySelector('input[name="vehicle_type"]:checked');
@@ -116,7 +108,6 @@ const EDIApp = (() => {
 
     const calculatedTotal = Math.round(baseTotal * multiplier);
 
-    // Atualiza o resumo visual
     const summaryVehicle = document.getElementById('summary-vehicle');
     const summaryServicesCount = document.getElementById('summary-services-count');
     const summaryTotal = document.getElementById('summary-total');
@@ -143,21 +134,18 @@ const EDIApp = (() => {
   const handleQuoteSubmit = (event) => {
     if (event) event.preventDefault();
 
-    // 1. Verificação Anti-Spam (Rate limiting)
     const now = Date.now();
     if (now - lastSubmitTime < CONFIG.rateLimitCooldownMs) {
       showToast('Por favor, aguarde alguns segundos antes de reenviar.');
       return;
     }
 
-    // 2. Verificação de Honeypot contra Robôs
     const trap = document.getElementById('website_trap_field');
     if (trap && trap.value.trim() !== '') {
-      console.warn('Bot detectado pelo campo de segurança.');
+      console.warn('Bot detectado.');
       return;
     }
 
-    // 3. Validação dos Campos de Entrada
     const nameInput = document.getElementById('client_name');
     const carInput = document.getElementById('car_model');
     const nameError = document.getElementById('name-error');
@@ -166,11 +154,8 @@ const EDIApp = (() => {
     if (nameError) nameError.textContent = '';
     if (carError) carError.textContent = '';
 
-    const rawName = nameInput ? nameInput.value : '';
-    const rawCar = carInput ? carInput.value : '';
-
-    const cleanName = cleanPlainText(rawName);
-    const cleanCar = cleanPlainText(rawCar);
+    const cleanName = cleanPlainText(nameInput ? nameInput.value : '');
+    const cleanCar = cleanPlainText(carInput ? carInput.value : '');
 
     let hasError = false;
 
@@ -188,20 +173,18 @@ const EDIApp = (() => {
 
     if (hasError) return;
 
-    // 4. Montagem dos Dados do Orçamento
     const estimate = calculateEstimate();
     if (estimate.selectedServices.length === 0) {
-      showToast('Selecione ao menos 1 serviço para o orçamento.');
+      showToast('Selecione ao menos 1 serviço para simulação.');
       return;
     }
 
     lastSubmitTime = now;
 
-    // 5. Construção da Mensagem Formatada para o WhatsApp
     const saudacao = getSaudacaoHorario();
-    let msg = `${saudacao}! Meu nome é *${cleanName}*.\n`;
-    msg += `Gostaria de solicitar um orçamento para meu veículo:\n\n`;
-    msg += `🚗 *Veículo:* ${cleanCar}\n`;
+    let msg = `${saudacao} Édipo! Meu nome é *${cleanName}*.\n`;
+    msg += `Gostaria de agendar um atendimento para meu veículo:\n\n`;
+    msg += `🚗 *Carro:* ${cleanCar}\n`;
     msg += `🏷️ *Categoria:* ${estimate.vehicleType}\n\n`;
     msg += `✨ *Serviços Selecionados:*\n`;
 
@@ -210,25 +193,21 @@ const EDIApp = (() => {
     });
 
     if (estimate.calculatedTotal > 0) {
-      msg += `\n💰 *Estimativa do Site:* A partir de R$ ${estimate.calculatedTotal.toLocaleString('pt-BR')}\n`;
+      msg += `\n💰 *Estimativa Base do Site:* A partir de R$ ${estimate.calculatedTotal.toLocaleString('pt-BR')}\n`;
     }
-    msg += `\nVi o site da *EDI Estética Automotiva* e gostaria de agendar uma data. Aguardo seu retorno!`;
+    msg += `\nVi o site da *Édipo Pimentel Estética Automotiva* e gostaria de agendar uma data. Você teria disponibilidade?`;
 
-    // 6. Abertura Segura do WhatsApp
     const encodedMsg = encodeURIComponent(msg);
     const whatsappLink = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMsg}`;
     window.open(whatsappLink, '_blank', 'noopener,noreferrer');
 
-    showToast('Redirecionando para o WhatsApp da EDI...');
+    showToast('Abrindo WhatsApp de Édipo Pimentel...');
   };
 
-  /**
-   * Atalho para mensagem direta vinda dos cards de serviços
-   */
   const openDirectWhatsApp = (customText) => {
     const saudacao = getSaudacaoHorario();
     const safeText = cleanPlainText(customText);
-    const msg = `${saudacao}! Estava no site da EDI Estética Automotiva e ${safeText}. Poderiam me passar mais informações sobre valores e disponibilidade?`;
+    const msg = `${saudacao} Édipo! Estava no site de Estética Automotiva e ${safeText}. Poderia me passar mais informações?`;
     const encoded = encodeURIComponent(msg);
     window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`, '_blank', 'noopener,noreferrer');
   };
@@ -241,7 +220,7 @@ const EDIApp = (() => {
   };
 
   /* ==========================================================================
-     4. Módulo Google Maps & Copiar Endereço
+     4. Módulo Google Maps & Cópia de Endereço
      ========================================================================== */
   const copyAddress = () => {
     const address = CONFIG.address;
@@ -273,7 +252,7 @@ const EDIApp = (() => {
   };
 
   /* ==========================================================================
-     5. Slider Interativo de Antes & Depois
+     5. Slider Interativo de Antes & Depois (Com Touch Estável para Mobile)
      ========================================================================== */
   const initComparisonSlider = () => {
     const container = document.getElementById('comparison-slider');
@@ -282,6 +261,8 @@ const EDIApp = (() => {
     if (!container || !afterLayer || !handle) return;
 
     let isSliding = false;
+    let startX = 0;
+    let startY = 0;
 
     const setPosition = (clientX) => {
       const rect = container.getBoundingClientRect();
@@ -294,7 +275,7 @@ const EDIApp = (() => {
       handle.style.left = `${percentage}%`;
     };
 
-    // Eventos de Mouse
+    // Mouse Events
     container.addEventListener('mousedown', (e) => {
       isSliding = true;
       setPosition(e.clientX);
@@ -309,22 +290,38 @@ const EDIApp = (() => {
       setPosition(e.clientX);
     });
 
-    // Eventos de Touch (Mobile)
+    // Touch Events sem travar o scroll vertical no mobile
     container.addEventListener('touchstart', (e) => {
-      isSliding = true;
-      if (e.touches && e.touches[0]) setPosition(e.touches[0].clientX);
+      if (e.touches && e.touches[0]) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isSliding = true;
+        setPosition(startX);
+      }
     }, { passive: true });
 
     window.addEventListener('touchend', () => {
       isSliding = false;
     });
 
-    window.addEventListener('touchmove', (e) => {
-      if (!isSliding) return;
-      if (e.touches && e.touches[0]) setPosition(e.touches[0].clientX);
+    window.addEventListener('touchcancel', () => {
+      isSliding = false;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isSliding || !e.touches || !e.touches[0]) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+
+      // Se o usuário estiver arrastando na horizontal, atualiza o slider
+      if (diffX > diffY) {
+        setPosition(currentX);
+      }
     }, { passive: true });
 
-    // Acessibilidade via Teclado
+    // Acessibilidade por Teclado
     container.addEventListener('keydown', (e) => {
       const currentPct = parseFloat(afterLayer.style.width || '50');
       if (e.key === 'ArrowLeft') {
@@ -340,12 +337,11 @@ const EDIApp = (() => {
   };
 
   /* ==========================================================================
-     6. Animações Modernas & Scroll Reveal
+     6. Animações e Scroll Reveal Suaves
      ========================================================================== */
   const initScrollAnimations = () => {
     const navbar = document.getElementById('navbar');
     
-    // Navbar com efeito de vidro ao rolar
     window.addEventListener('scroll', () => {
       if (window.scrollY > 40) {
         navbar?.classList.add('scrolled');
@@ -354,7 +350,6 @@ const EDIApp = (() => {
       }
     }, { passive: true });
 
-    // Intersection Observer para reveal suave dos elementos
     const revealItems = document.querySelectorAll('.reveal-item');
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries, obs) => {
@@ -365,30 +360,13 @@ const EDIApp = (() => {
           }
         });
       }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
       });
 
       revealItems.forEach(el => observer.observe(el));
     } else {
-      // Fallback para navegadores sem observer
       revealItems.forEach(el => el.classList.add('revealed'));
-    }
-
-    // Microinteração de mouse parallax no carro hero (Desktop)
-    const heroCar = document.getElementById('hero-car');
-    if (heroCar && window.innerWidth > 992) {
-      const heroSec = document.getElementById('hero');
-      heroSec?.addEventListener('mousemove', (e) => {
-        const rect = heroSec.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        heroCar.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 3}deg) scale(1.01)`;
-      }, { passive: true });
-
-      heroSec?.addEventListener('mouseleave', () => {
-        heroCar.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)';
-      });
     }
   };
 
@@ -423,7 +401,6 @@ const EDIApp = (() => {
     if (modal) modal.classList.remove('open');
   };
 
-  // Fechamento de modal com clique fora ou tecla ESC
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
@@ -454,7 +431,7 @@ const EDIApp = (() => {
   };
 
   /* ==========================================================================
-     9. Inicialização Geral
+     9. Inicialização
      ========================================================================== */
   const init = () => {
     initBusinessStatus();
@@ -463,18 +440,15 @@ const EDIApp = (() => {
     initMobileNavigation();
     calculateEstimate();
 
-    // Atualiza status a cada 60 segundos
     setInterval(initBusinessStatus, 60000);
   };
 
-  // Executa ao carregar o DOM
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 
-  // API Pública
   return {
     calculateEstimate,
     handleQuoteSubmit,
