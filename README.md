@@ -15,7 +15,7 @@ Website moderno de alta performance desenvolvido para a **EDI Estética Automoti
   - Envio direto para o WhatsApp oficial **(49) 98844-9865** com mensagem pronta e personalizada.
 - **Slider Antes & Depois Interativo:** Controle deslizante para comparação de correção de pintura e vitrificação 9H.
 - **Localização no Google Maps:**
-  - Mapa interativo embedado (Herval d'Oeste e Chapecó - SC).
+  - Mapa interativo embedado (Herval d'Oeste - SC).
   - Botões diretos para traçar rota no **Google Maps** e no **Waze**.
   - Função de copiar endereço completo com confirmação visual (toast).
 - **Status Operacional em Tempo Real:** Indicador dinâmico de estúdio aberto/fechado conforme horário atual.
@@ -57,6 +57,5 @@ Acesse em: `http://localhost:8080`
 ## 📞 Contato & Localização
 
 - **WhatsApp:** [(49) 98844-9865](https://wa.me/5549988449865)
-- **Instagram:** [@ediesteticaautomotiva_](https://www.instagram.com/ediesteticaautomotiva_/)
-- **Endereço:** Rua Luiza Piovesan Martini, 50 - Loteamento Trevisan, Bairro São Jorge - Herval d'Oeste - SC
-- **Unidade Chapecó:** R. Paulo Marquês, 264e - Centro - SC
+- **Endereço:** Rua Luiza Piovesan Martini, 50 - Loteamento Trevisan, Bairro São Jorge - Herval d'Oeste - SC, 89610-000
+- **Google Maps:** [Abrir Localização da EDI](https://maps.google.com/?q=Rua+Luiza+Piovesan+Martini,+50,+Herval+d%27Oeste+-+SC)
