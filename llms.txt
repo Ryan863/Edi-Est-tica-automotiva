@@ -1,0 +1,40 @@
+# Édipo Pimentel Estética Automotiva
+
+> Estúdio de estética automotiva e detalhamento de alta performance localizado em Herval d'Oeste, Santa Catarina. Especializado em vitrificação cerâmica 9H, polimento técnico corretivo, espelhamento, restauração de faróis, detalhamento de rodas e higienização interna profunda.
+
+## Informações do Estúdio
+
+- **Proprietário / Detalhador:** Édipo Pimentel
+- **Segmento:** Estética Automotiva & Detalhamento Premium
+- **Telefone / WhatsApp:** (49) 9.8844-9865
+- **E-mail:** edipopimentel0307@yahoo.com
+- **Endereço:** Rua Luiza Piovesan Martini, 50 - Loteamento Trevisan, Bairro São Jorge - Herval d'Oeste - SC, 89610-000
+- **Horário de Atendimento:** Segunda a Sexta das 08:00 às 18:30 | Sábados sob agendamento prévio
+
+## Principais Serviços
+
+- **Vitrificação Cerâmica 9H:** Blindagem nanométrica hidrofóbica com alta resistência contra contaminantes ambientais, raios UV e dejetos de aves.
+- **Polimento Técnico & Espelhamento:** Correção de verniz através de corte, refino e lustro para eliminação de micro-riscos (swirls) e restauração do reflexo puro.
+- **Restauração de Faróis:** Recuperação ótica de lentes policarbonato oxidadas com aplicação de selante com filtro ultravioleta.
+- **Detalhamento de Rodas & Pinças:** Descontaminação ferrosa profunda com produtos pH neutro e proteção de ligas e pinças de freio.
+- **Higienização Interna & Couro:** Limpeza técnica a vapor de estofados, higienização de carpetes e hidratação profunda de couro legítimo.
+- **Lavagem Técnica Snow Foam:** Processo dos dois baldes com shampoos neutros e toalhas de microfibra, garantindo zero agressão ao verniz.
+
+## Estrutura do Site
+
+- [Início](#hero): Apresentação do estúdio e atendimento exclusivo.
+- [Sobre](#brand-card): Identidade oficial da marca e diferenciais de atendimento de Édipo Pimentel.
+- [Serviços](#services): Catálogo dos procedimentos técnicos realizados.
+- [Vídeos dos Trabalhos](#videos): Carrossel com registros audiovisuais reais de serviços executados no estúdio.
+- [Diferenciais](#differentials): Padrões de qualidade, produtos certificados e medição de micragem de verniz.
+- [Localização](#location): Mapa interativo e rotas via Google Maps e Waze para o estúdio em Herval d'Oeste.
+
+## Tecnologias e Padrões Web
+
+- HTML5 Semântico com Content Security Policy (CSP) rigorosa
+- CSS Vanilla com design responsivo (Mobile First & Desktop Luxury)
+- Paleta: Cinza Titânio (#7d8084) e Preto Profundo (#000000)
+- Tipografia: Playfair Display (Serif) & Montserrat / Plus Jakarta Sans
+- Carrossel multimídia com suporte a gestos touch/swipe e controles para desktop
+- Imagens otimizadas com Lazy Loading para máxima performance (Core Web Vitals)
+- Proteção anti-spam via honeypot e rate-limiting

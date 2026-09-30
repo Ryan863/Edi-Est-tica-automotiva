@@ -316,90 +316,7 @@ const EDIApp = (() => {
     document.body.removeChild(tempInput);
   };
 
-  /* ==========================================================================
-     5. Slider Interativo de Antes & Depois (Com Touch Estável para Mobile)
-     ========================================================================== */
-  const initComparisonSlider = () => {
-    const container = document.getElementById('comparison-slider');
-    const afterLayer = document.getElementById('comp-after-layer');
-    const handle = document.getElementById('comp-handle');
-    if (!container || !afterLayer || !handle) return;
 
-    let isSliding = false;
-    let startX = 0;
-    let startY = 0;
-
-    const setPosition = (clientX) => {
-      const rect = container.getBoundingClientRect();
-      let positionX = clientX - rect.left;
-      if (positionX < 0) positionX = 0;
-      if (positionX > rect.width) positionX = rect.width;
-
-      const percentage = (positionX / rect.width) * 100;
-      afterLayer.style.width = `${percentage}%`;
-      handle.style.left = `${percentage}%`;
-    };
-
-    // Mouse Events
-    container.addEventListener('mousedown', (e) => {
-      isSliding = true;
-      setPosition(e.clientX);
-    });
-
-    window.addEventListener('mouseup', () => {
-      isSliding = false;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isSliding) return;
-      setPosition(e.clientX);
-    });
-
-    // Touch Events sem travar o scroll vertical no mobile
-    container.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches[0]) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isSliding = true;
-        setPosition(startX);
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-      isSliding = false;
-    });
-
-    window.addEventListener('touchcancel', () => {
-      isSliding = false;
-    });
-
-    container.addEventListener('touchmove', (e) => {
-      if (!isSliding || !e.touches || !e.touches[0]) return;
-      const currentX = e.touches[0].clientX;
-      const currentY = e.touches[0].clientY;
-      const diffX = Math.abs(currentX - startX);
-      const diffY = Math.abs(currentY - startY);
-
-      // Se o usuário estiver arrastando na horizontal, atualiza o slider
-      if (diffX > diffY) {
-        setPosition(currentX);
-      }
-    }, { passive: true });
-
-    // Acessibilidade por Teclado
-    container.addEventListener('keydown', (e) => {
-      const currentPct = parseFloat(afterLayer.style.width || '50');
-      if (e.key === 'ArrowLeft') {
-        const next = Math.max(0, currentPct - 5);
-        afterLayer.style.width = `${next}%`;
-        handle.style.left = `${next}%`;
-      } else if (e.key === 'ArrowRight') {
-        const next = Math.min(100, currentPct + 5);
-        afterLayer.style.width = `${next}%`;
-        handle.style.left = `${next}%`;
-      }
-    });
-  };
 
   /* ==========================================================================
      6. Animações e Scroll Reveal Suaves
@@ -500,7 +417,6 @@ const EDIApp = (() => {
      ========================================================================== */
   const init = () => {
     initBusinessStatus();
-    initComparisonSlider();
     initScrollAnimations();
     initMobileNavigation();
     initVideosCarousel();

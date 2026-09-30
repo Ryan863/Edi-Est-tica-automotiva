@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://edipoesteticaautomotiva.com.br/sitemap.xml
